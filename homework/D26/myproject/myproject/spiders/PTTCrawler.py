@@ -2,11 +2,12 @@
 import scrapy
 from bs4 import BeautifulSoup
 import re
+# from pydispatch import Dispatcher
 
 class PttcrawlerSpider(scrapy.Spider):
     name = 'PTTCrawler'
     allowed_domains = ['www.ptt.cc']
-    start_urls = ['https://www.ptt.cc/bbs/Tech_Job/M.1562258438.A.12A.html']
+    start_urls = ['https://www.ptt.cc/bbs/Tech_Job/M.1562258438.A.12A.html','https://www.ptt.cc/bbs/Tech_Job/M.1577676886.A.993.html']
     cookies = {'over18': '1'}
 
     def start_requests(self):
@@ -101,9 +102,6 @@ class PttcrawlerSpider(scrapy.Spider):
             push_tag = push.find('span','push-tag').string.strip(' \t\n\r')
             push_userid = push.find('span','push-userid').string.strip(' \t\n\r')
             push_content = push.find('span','push-content').strings
-            for string in push_content:
-                print(repr(string))
-            input()
 
             push_content = ' '.join(push_content)[1:].strip(' \t\n\r')
             push_ipdatetime = push.find('span','push-ipdatetime').string.strip(' \t\n\r')
@@ -139,4 +137,4 @@ class PttcrawlerSpider(scrapy.Spider):
             'messages': messages
         }
 
-        yield data
+        yield  data
